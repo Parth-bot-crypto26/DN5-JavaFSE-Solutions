@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    doc3: "Create static employee list data using spring xml configuration"
+    - Two departments
+    - Existing skills reused (same names as the Spring Data JPA module)
+    - Four employees, each wired to one department and a list of skills
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Departments -->
+    <bean id="engineering" class="com.cognizant.springlearn.model.Department">
+        <property name="id" value="1"/>
+        <property name="name" value="Engineering"/>
+    </bean>
+    <bean id="sales" class="com.cognizant.springlearn.model.Department">
+        <property name="id" value="2"/>
+        <property name="name" value="Sales"/>
+    </bean>
+
+    <bean id="departmentList" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="engineering"/>
+                <ref bean="sales"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Skills (reused, not recreated, across employees) -->
+    <bean id="java" class="com.cognizant.springlearn.model.Skill">
+        <property name="id" value="1"/>
+        <property name="name" value="Java"/>
+    </bean>
+    <bean id="sql" class="com.cognizant.springlearn.model.Skill">
+        <property name="id" value="2"/>
+        <property name="name" value="SQL"/>
+    </bean>
+    <bean id="communication" class="com.cognizant.springlearn.model.Skill">
+        <property name="id" value="3"/>
+        <property name="name" value="Communication"/>
+    </bean>
+    <bean id="negotiation" class="com.cognizant.springlearn.model.Skill">
+        <property name="id" value="4"/>
+        <property name="name" value="Negotiation"/>
+    </bean>
+
+    <!-- Employees -->
+    <bean id="employee1" class="com.cognizant.springlearn.model.Employee">
+        <property name="id" value="1"/>
+        <property name="name" value="Alice Johnson"/>
+        <property name="designation" value="Senior Software Engineer"/>
+        <property name="department" ref="engineering"/>
+        <property name="skills">
+            <list>
+                <ref bean="java"/>
+                <ref bean="sql"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="employee2" class="com.cognizant.springlearn.model.Employee">
+        <property name="id" value="2"/>
+        <property name="name" value="Bob Smith"/>
+        <property name="designation" value="Software Engineer"/>
+        <property name="department" ref="engineering"/>
+        <property name="skills">
+            <list>
+                <ref bean="java"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="employee3" class="com.cognizant.springlearn.model.Employee">
+        <property name="id" value="3"/>
+        <property name="name" value="Carla Diaz"/>
+        <property name="designation" value="Sales Executive"/>
+        <property name="department" ref="sales"/>
+        <property name="skills">
+            <list>
+                <ref bean="communication"/>
+                <ref bean="negotiation"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="employee4" class="com.cognizant.springlearn.model.Employee">
+        <property name="id" value="4"/>
+        <property name="name" value="David Lee"/>
+        <property name="designation" value="Sales Manager"/>
+        <property name="department" ref="sales"/>
+        <property name="skills">
+            <list>
+                <ref bean="communication"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="employeeList" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="employee1"/>
+                <ref bean="employee2"/>
+                <ref bean="employee3"/>
+                <ref bean="employee4"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

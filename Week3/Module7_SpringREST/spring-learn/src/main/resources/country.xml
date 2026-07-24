@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Hands on 4: Spring Core - Load Country from Spring Configuration XML  ⭐ MANDATORY
+    Hands on 5: Demonstration of Singleton Scope and Prototype Scope
+    Hands on 6: Load list of countries from Spring Configuration XML
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Hands on 4: the single India bean the earlier hands-on asks for -->
+    <bean id="country" class="com.cognizant.springlearn.model.Country">
+        <property name="code" value="IN"/>
+        <property name="name" value="India"/>
+    </bean>
+
+    <!--
+        Hands on 5: same class, scope="prototype" instead of the implicit
+        default "singleton". Kept as a separate bean id (rather than editing
+        "country" in place, as the original doc does across two runs) so a
+        single run of the app can demonstrate BOTH scopes side by side -
+        see SpringLearnApplication.displayCountry() for the constructor-call
+        counts that prove it.
+    -->
+    <bean id="countryPrototype" class="com.cognizant.springlearn.model.Country" scope="prototype">
+        <property name="code" value="IN"/>
+        <property name="name" value="India"/>
+    </bean>
+
+    <!-- Hands on 6: one bean per country, referenced into an ArrayList below -->
+    <bean id="in" class="com.cognizant.springlearn.model.Country">
+        <property name="code" value="IN"/>
+        <property name="name" value="India"/>
+    </bean>
+    <bean id="us" class="com.cognizant.springlearn.model.Country">
+        <property name="code" value="US"/>
+        <property name="name" value="United States"/>
+    </bean>
+    <bean id="de" class="com.cognizant.springlearn.model.Country">
+        <property name="code" value="DE"/>
+        <property name="name" value="Germany"/>
+    </bean>
+    <bean id="jp" class="com.cognizant.springlearn.model.Country">
+        <property name="code" value="JP"/>
+        <property name="name" value="Japan"/>
+    </bean>
+
+    <bean id="countryList" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="in"/>
+                <ref bean="us"/>
+                <ref bean="de"/>
+                <ref bean="jp"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

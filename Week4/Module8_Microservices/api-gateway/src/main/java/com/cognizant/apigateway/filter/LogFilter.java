@@ -1,0 +1,35 @@
+package com.cognizant.apigateway.filter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+/**
+ * "Implement a global filter which logs all incoming requests"
+ *
+ * A GlobalFilter runs for every route the gateway handles - unlike a
+ * per-route GatewayFilter, there's nothing to wire up in application.properties.
+ */
+@Component
+public class LogFilter implements GlobalFilter, Ordered {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogFilter.class);
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        LOGGER.info("Incoming request: {} {}",
+                exchange.getRequest().getMethod(),
+                exchange.getRequest().getURI());
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
+    }
+}
